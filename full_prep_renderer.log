@@ -1,0 +1,11 @@
+Videos: 15743
+GPUs: 4 x 24 threads = 96 concurrent pipelines
+Output: /workspace/liveavatar_data/renderer_dataset
+
+All GPUs (96 workers):   0%|          | 0/15743 [00:00<?, ?it/s]All GPUs (96 workers):  12%|█▏        | 1929/15743 [00:00<00:00, 1035557.71it/s]All GPUs (96 workers):  40%|████      | 6299/15743 [00:02<00:03, 3143.04it/s]   All GPUs (96 workers):  74%|███████▎  | 11608/15743 [00:04<00:01, 2897.22it/s][GPU 0] Done. Success=0 Skipped=3936 Failed=0
+[GPU 1] Done. Success=0 Skipped=3936 Failed=0
+[GPU 2] Done. Success=0 Skipped=3936 Failed=0
+All GPUs (96 workers):  94%|█████████▍| 14847/15743 [00:06<00:00, 2470.30it/s][GPU 3] Done. Success=0 Skipped=3935 Failed=0
+All GPUs (96 workers): 100%|██████████| 15743/15743 [00:08<00:00, 1964.60it/s]All GPUs (96 workers): 100%|██████████| 15743/15743 [00:10<00:00, 1571.86it/s]All GPUs (96 workers): 100%|██████████| 15743/15743 [00:10<00:00, 1571.78it/s]
+
+Done! Dataset at: /workspace/liveavatar_data/renderer_dataset

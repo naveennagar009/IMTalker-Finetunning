@@ -1,0 +1,58 @@
+Some weights of the model checkpoint at ./checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'lm_head.bias', 'lm_head.weight', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at ./checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.3.0 (conda-forge gcc 14.3.0-16)
+  configuration: --prefix=/opt/conda/envs/IMTalker --cc=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-cc --cxx=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-c++ --nm=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-nm --ar=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-ar --disable-doc --enable-openssl --enable-demuxer=dash --enable-hardcoded-tables --enable-libfreetype --enable-libharfbuzz --enable-libfontconfig --enable-libopenh264 --enable-libdav1d --disable-gnutls --enable-libvpx --enable-libass --enable-pthreads --enable-alsa --enable-libpulse --enable-libvpl --enable-vaapi --enable-libopenvino --enable-gpl --enable-libx264 --enable-libx265 --enable-libmp3lame --enable-libaom --enable-libsvtav1 --enable-libxml2 --enable-pic --enable-shared --disable-static --enable-version3 --enable-zlib --enable-libvorbis --enable-libopus --enable-librsvg --enable-libjxl --enable-libwebp --enable-ffplay --enable-vulkan --enable-libshaderc --pkg-config=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/pkg-config
+  libavutil      60.  8.100 / 60.  8.100
+  libavcodec     62. 11.100 / 62. 11.100
+  libavformat    62.  3.100 / 62.  3.100
+  libavdevice    62.  1.100 / 62.  1.100
+  libavfilter    11.  4.100 / 11.  4.100
+  libswscale      9.  1.100 /  9.  1.100
+  libswresample   6.  1.100 /  6.  1.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/tmp/tmpb7s4nm7w.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf60.16.100
+  Duration: 00:00:46.96, start: 0.000000, bitrate: 1023 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 512x512, 1020 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+[aist#1:0/pcm_s16le @ 0x5d56faba6880] Guessed Channel Layout: stereo
+Input #1, wav, from '/workspace/test/image.wav':
+  Metadata:
+    encoder         : Lavf61.1.100
+  Duration: 00:00:46.93, bitrate: 1536 kb/s
+  Stream #1:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (copy)
+  Stream #1:0 -> #0:1 (pcm_s16le (native) -> aac (native))
+Press [q] to stop, [?] for help
+Output #0, mp4, to '/workspace/results_image2/finetuned/image2.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 512x512, q=2-31, 1020 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1: Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 128 kb/s
+    Metadata:
+      encoder         : Lavc62.11.100 aac
+frame=  268 fps=0.0 q=-1.0 size=    1280KiB time=00:00:10.53 bitrate= 995.0kbits/s speed=21.1x elapsed=0:00:00.50    frame=  615 fps=615 q=-1.0 size=    3328KiB time=00:00:24.40 bitrate=1117.1kbits/s speed=24.4x elapsed=0:00:01.00    frame=  991 fps=660 q=-1.0 size=    5376KiB time=00:00:39.44 bitrate=1116.5kbits/s speed=26.3x elapsed=0:00:01.50    [out#0/mp4 @ 0x5d56fab734c0] video:5852KiB audio:732KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.552088%
+frame= 1174 fps=701 q=-1.0 Lsize=    6619KiB time=00:00:46.88 bitrate=1156.7kbits/s speed=  28x elapsed=0:00:01.67    
+[aac @ 0x5d56fabc22c0] Qavg: 686.807
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: image2
+Writing video to temp file: /tmp/tmpb7s4nm7w.mp4
+Running ffmpeg: ffmpeg -i /tmp/tmpb7s4nm7w.mp4 -i /workspace/test/image.wav -c:v copy -c:a aac /workspace/results_image2/finetuned/image2.mp4 -y
+Ffmpeg return code: 0

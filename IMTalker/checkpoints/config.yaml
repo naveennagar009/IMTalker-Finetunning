@@ -1,0 +1,10 @@
+{
+  "_name_or_path": "IMTalker",
+  "model_type": "custom",
+  "model_description": "IMTalker model checkpoint. This config file enables Hugging Face download tracking.",
+  "version": "1.0.0",
+  "author": "cbsjtu01",
+  "library": "custom",
+  "format": "ckpt",
+  "config_created_for": "enable_download_metrics"
+}

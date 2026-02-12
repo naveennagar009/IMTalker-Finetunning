@@ -1,0 +1,267 @@
+ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.3.0 (conda-forge gcc 14.3.0-16)
+  configuration: --prefix=/opt/conda/envs/IMTalker --cc=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-cc --cxx=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-c++ --nm=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-nm --ar=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-ar --disable-doc --enable-openssl --enable-demuxer=dash --enable-hardcoded-tables --enable-libfreetype --enable-libharfbuzz --enable-libfontconfig --enable-libopenh264 --enable-libdav1d --disable-gnutls --enable-libvpx --enable-libass --enable-pthreads --enable-alsa --enable-libpulse --enable-libvpl --enable-vaapi --enable-libopenvino --enable-gpl --enable-libx264 --enable-libx265 --enable-libmp3lame --enable-libaom --enable-libsvtav1 --enable-libxml2 --enable-pic --enable-shared --disable-static --enable-version3 --enable-zlib --enable-libvorbis --enable-libopus --enable-librsvg --enable-libjxl --enable-libwebp --enable-ffplay --enable-vulkan --enable-libshaderc --pkg-config=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/pkg-config
+  libavutil      60.  8.100 / 60.  8.100
+  libavcodec     62. 11.100 / 62. 11.100
+  libavformat    62.  3.100 / 62.  3.100
+  libavdevice    62.  1.100 / 62.  1.100
+  libavfilter    11.  4.100 / 11.  4.100
+  libswscale      9.  1.100 /  9.  1.100
+  libswresample   6.  1.100 /  6.  1.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/workspace/results_test2/base/15001147-a-close-up-of-a-woman-s-face-with-a-small-smile-playing-on-her-lips_image.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Duration: 00:00:46.96, start: 0.000000, bitrate: 1159 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 512x512, 1025 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Input #1, mov,mp4,m4a,3gp,3g2,mj2, from '/workspace/results_test2/finetuned/15001147-a-close-up-of-a-woman-s-face-with-a-small-smile-playing-on-her-lips_image.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Duration: 00:00:46.96, start: 0.000000, bitrate: 1154 kb/s
+  Stream #1:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 512x512, 1020 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #1:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:0 (h264) -> drawtext:default
+  Stream #1:0 (h264) -> drawtext:default
+  hstack:default -> Stream #0:0 (libx264)
+  Stream #1:1 -> #0:1 (copy)
+Press [q] to stop, [?] for help
+[libx264 @ 0x5614adbff700] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0x5614adbff700] profile High, level 3.1, 4:2:0, 8-bit
+[libx264 @ 0x5614adbff700] 264 - core 164 r3095 baee400 - H.264/MPEG-4 AVC codec - Copyleft 2003-2022 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=16 lookahead_threads=2 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to '/workspace/results_test2/merged/15001147-a-close-up-of-a-woman-s-face-with-a-small-smile-playing-on-her-lips_image_merged.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, progressive), 1024x512, q=2-31, 25 fps, 12800 tbn
+    Metadata:
+      encoder         : Lavc62.11.100 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+frame=   22 fps=0.0 q=23.0 size=       0KiB time=00:00:00.80 bitrate=   0.5kbits/s speed= 1.6x elapsed=0:00:00.50    frame=  114 fps=114 q=23.0 size=    1280KiB time=00:00:04.48 bitrate=2340.7kbits/s speed=4.48x elapsed=0:00:01.00    frame=  222 fps=148 q=23.0 size=    2560KiB time=00:00:08.80 bitrate=2383.2kbits/s speed=5.86x elapsed=0:00:01.50    frame=  304 fps=152 q=23.0 size=    3584KiB time=00:00:12.08 bitrate=2430.5kbits/s speed=6.04x elapsed=0:00:02.00    frame=  399 fps=160 q=23.0 size=    4608KiB time=00:00:15.88 bitrate=2377.1kbits/s speed=6.35x elapsed=0:00:02.50    frame=  486 fps=162 q=20.0 size=    5888KiB time=00:00:19.36 bitrate=2491.5kbits/s speed=6.45x elapsed=0:00:03.00    frame=  580 fps=166 q=23.0 size=    7168KiB time=00:00:23.12 bitrate=2539.8kbits/s speed= 6.6x elapsed=0:00:03.50    frame=  669 fps=167 q=23.0 size=    8192KiB time=00:00:26.68 bitrate=2515.3kbits/s speed=6.67x elapsed=0:00:04.00    frame=  759 fps=169 q=23.0 size=    9472KiB time=00:00:30.28 bitrate=2562.6kbits/s speed=6.73x elapsed=0:00:04.50    frame=  843 fps=169 q=23.0 size=   10752KiB time=00:00:33.64 bitrate=2618.3kbits/s speed=6.72x elapsed=0:00:05.00    frame=  941 fps=171 q=23.0 size=   12032KiB time=00:00:37.56 bitrate=2624.2kbits/s speed=6.83x elapsed=0:00:05.50    frame= 1034 fps=172 q=23.0 size=   13312KiB time=00:00:41.28 bitrate=2641.8kbits/s speed=6.88x elapsed=0:00:06.00    frame= 1137 fps=175 q=23.0 size=   14592KiB time=00:00:45.40 bitrate=2633.0kbits/s speed=6.98x elapsed=0:00:06.50    [out#0/mp4 @ 0x5614adbca040] video:14383KiB audio:732KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.240268%
+frame= 1174 fps=176 q=-1.0 Lsize=   15151KiB time=00:00:46.88 bitrate=2647.6kbits/s speed=7.04x elapsed=0:00:06.66    
+[libx264 @ 0x5614adbff700] frame I:5     Avg QP:16.32  size: 60819
+[libx264 @ 0x5614adbff700] frame P:296   Avg QP:18.81  size: 28001
+[libx264 @ 0x5614adbff700] frame B:873   Avg QP:21.99  size:  7028
+[libx264 @ 0x5614adbff700] consecutive B-frames:  0.6%  0.2%  1.8% 97.4%
+[libx264 @ 0x5614adbff700] mb I  I16..4:  1.9% 87.2% 10.9%
+[libx264 @ 0x5614adbff700] mb P  I16..4:  0.6% 13.8%  1.1%  P16..4: 37.6% 29.0% 14.0%  0.0%  0.0%    skip: 4.0%
+[libx264 @ 0x5614adbff700] mb B  I16..4:  0.0%  0.6%  0.0%  B16..8: 47.9% 10.4%  2.7%  direct: 4.5%  skip:33.7%  L0:43.6% L1:42.9% BI:13.5%
+[libx264 @ 0x5614adbff700] 8x8 transform intra:89.2% inter:76.2%
+[libx264 @ 0x5614adbff700] coded y,uvDC,uvAC intra: 89.6% 83.6% 29.6% inter: 31.1% 23.0% 0.2%
+[libx264 @ 0x5614adbff700] i16 v,h,dc,p: 38%  8% 17% 37%
+[libx264 @ 0x5614adbff700] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 22% 11% 14%  6%  9% 18%  7%  8%  6%
+[libx264 @ 0x5614adbff700] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 23%  9%  9%  6% 16% 21%  6%  6%  4%
+[libx264 @ 0x5614adbff700] i8c dc,h,v,p: 48% 17% 26%  9%
+[libx264 @ 0x5614adbff700] Weighted P-Frames: Y:18.9% UV:7.4%
+[libx264 @ 0x5614adbff700] ref P L0: 45.6% 19.9% 20.9% 11.1%  2.5%
+[libx264 @ 0x5614adbff700] ref B L0: 83.4% 12.1%  4.4%
+[libx264 @ 0x5614adbff700] ref B L1: 95.2%  4.8%
+[libx264 @ 0x5614adbff700] kb/s:2509.00
+ffmpeg version 8.0.1 Copyright (c) 2000-2025 the FFmpeg developers
+  built with gcc 14.3.0 (conda-forge gcc 14.3.0-16)
+  configuration: --prefix=/opt/conda/envs/IMTalker --cc=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-cc --cxx=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-c++ --nm=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-nm --ar=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/x86_64-conda-linux-gnu-ar --disable-doc --enable-openssl --enable-demuxer=dash --enable-hardcoded-tables --enable-libfreetype --enable-libharfbuzz --enable-libfontconfig --enable-libopenh264 --enable-libdav1d --disable-gnutls --enable-libvpx --enable-libass --enable-pthreads --enable-alsa --enable-libpulse --enable-libvpl --enable-vaapi --enable-libopenvino --enable-gpl --enable-libx264 --enable-libx265 --enable-libmp3lame --enable-libaom --enable-libsvtav1 --enable-libxml2 --enable-pic --enable-shared --disable-static --enable-version3 --enable-zlib --enable-libvorbis --enable-libopus --enable-librsvg --enable-libjxl --enable-libwebp --enable-ffplay --enable-vulkan --enable-libshaderc --pkg-config=/home/conda/feedstock_root/build_artifacts/ffmpeg_1769712549653/_build_env/bin/pkg-config
+  libavutil      60.  8.100 / 60.  8.100
+  libavcodec     62. 11.100 / 62. 11.100
+  libavformat    62.  3.100 / 62.  3.100
+  libavdevice    62.  1.100 / 62.  1.100
+  libavfilter    11.  4.100 / 11.  4.100
+  libswscale      9.  1.100 /  9.  1.100
+  libswresample   6.  1.100 /  6.  1.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/workspace/results_test2/base/15001147-a-close-up-of-a-woman-s-face-with-a-small-smile-playing-on-her-lips_palki_sharma.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Duration: 00:00:27.68, start: 0.000000, bitrate: 1165 kb/s
+  Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 512x512, 1030 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Input #1, mov,mp4,m4a,3gp,3g2,mj2, from '/workspace/results_test2/finetuned/15001147-a-close-up-of-a-woman-s-face-with-a-small-smile-playing-on-her-lips_palki_sharma.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Duration: 00:00:27.68, start: 0.000000, bitrate: 1150 kb/s
+  Stream #1:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(progressive), 512x512, 1015 kb/s, 25 fps, 25 tbr, 12800 tbn (default)
+    Metadata:
+      handler_name    : VideoHandler
+      vendor_id       : [0][0][0][0]
+  Stream #1:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+Stream mapping:
+  Stream #0:0 (h264) -> drawtext:default
+  Stream #1:0 (h264) -> drawtext:default
+  hstack:default -> Stream #0:0 (libx264)
+  Stream #1:1 -> #0:1 (copy)
+Press [q] to stop, [?] for help
+[libx264 @ 0x575ba83fe280] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0x575ba83fe280] profile High, level 3.1, 4:2:0, 8-bit
+[libx264 @ 0x575ba83fe280] 264 - core 164 r3095 baee400 - H.264/MPEG-4 AVC codec - Copyleft 2003-2022 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=16 lookahead_threads=2 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=18.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to '/workspace/results_test2/merged/15001147-a-close-up-of-a-woman-s-face-with-a-small-smile-playing-on-her-lips_palki_sharma_merged.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf62.3.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, progressive), 1024x512, q=2-31, 25 fps, 12800 tbn
+    Metadata:
+      encoder         : Lavc62.11.100 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 127 kb/s (default)
+    Metadata:
+      handler_name    : SoundHandler
+      vendor_id       : [0][0][0][0]
+frame=   30 fps=0.0 q=23.0 size=     256KiB time=00:00:01.12 bitrate=1872.8kbits/s speed=2.24x elapsed=0:00:00.50    frame=  125 fps=125 q=23.0 size=    1280KiB time=00:00:04.92 bitrate=2131.3kbits/s speed=4.92x elapsed=0:00:01.00    frame=  214 fps=143 q=23.0 size=    2560KiB time=00:00:08.48 bitrate=2473.1kbits/s speed=5.65x elapsed=0:00:01.50    frame=  301 fps=150 q=23.0 size=    3840KiB time=00:00:11.96 bitrate=2630.2kbits/s speed=5.98x elapsed=0:00:02.00    frame=  399 fps=160 q=23.0 size=    4864KiB time=00:00:15.88 bitrate=2509.2kbits/s speed=6.35x elapsed=0:00:02.50    frame=  486 fps=162 q=20.0 size=    6144KiB time=00:00:19.36 bitrate=2599.8kbits/s speed=6.45x elapsed=0:00:03.00    frame=  569 fps=163 q=23.0 size=    7168KiB time=00:00:22.68 bitrate=2589.1kbits/s speed=6.48x elapsed=0:00:03.50    frame=  665 fps=166 q=23.0 size=    8448KiB time=00:00:26.52 bitrate=2609.6kbits/s speed=6.63x elapsed=0:00:04.00    [out#0/mp4 @ 0x575ba8432500] video:8500KiB audio:431KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.269033%
+frame=  692 fps=168 q=-1.0 Lsize=    8955KiB time=00:00:27.60 bitrate=2658.0kbits/s speed=6.69x elapsed=0:00:04.12    
+[libx264 @ 0x575ba83fe280] frame I:3     Avg QP:16.47  size: 60091
+[libx264 @ 0x575ba83fe280] frame P:175   Avg QP:18.65  size: 28664
+[libx264 @ 0x575ba83fe280] frame B:514   Avg QP:21.88  size:  6822
+[libx264 @ 0x575ba83fe280] consecutive B-frames:  0.4%  1.2%  1.3% 97.1%
+[libx264 @ 0x575ba83fe280] mb I  I16..4:  1.9% 84.6% 13.6%
+[libx264 @ 0x575ba83fe280] mb P  I16..4:  0.5% 12.1%  1.1%  P16..4: 37.2% 29.6% 14.8%  0.0%  0.0%    skip: 4.8%
+[libx264 @ 0x575ba83fe280] mb B  I16..4:  0.0%  0.5%  0.0%  B16..8: 46.5%  9.5%  2.6%  direct: 4.8%  skip:36.1%  L0:43.7% L1:42.4% BI:13.8%
+[libx264 @ 0x575ba83fe280] 8x8 transform intra:88.4% inter:75.8%
+[libx264 @ 0x575ba83fe280] coded y,uvDC,uvAC intra: 90.9% 85.7% 33.5% inter: 31.1% 24.1% 0.2%
+[libx264 @ 0x575ba83fe280] i16 v,h,dc,p: 33%  9% 16% 43%
+[libx264 @ 0x575ba83fe280] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 22% 11% 13%  6% 10% 19%  7%  8%  5%
+[libx264 @ 0x575ba83fe280] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 23%  8%  9%  6% 16% 22%  6%  6%  4%
+[libx264 @ 0x575ba83fe280] i8c dc,h,v,p: 47% 17% 27% 10%
+[libx264 @ 0x575ba83fe280] Weighted P-Frames: Y:10.9% UV:1.7%
+[libx264 @ 0x575ba83fe280] ref P L0: 48.4% 19.8% 20.9% 10.3%  0.6%
+[libx264 @ 0x575ba83fe280] ref B L0: 84.3% 11.8%  3.8%
+[libx264 @ 0x575ba83fe280] ref B L1: 95.7%  4.3%
+[libx264 @ 0x575ba83fe280] kb/s:2515.27
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['lm_head.weight', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'lm_head.bias', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1', 'wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw
+Error processing D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['lm_head.bias', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'lm_head.weight', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw
+Error processing D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'lm_head.bias', 'lm_head.weight']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw
+Error processing D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['lm_head.bias', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'lm_head.weight']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.masked_spec_embed']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw
+Error processing D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['lm_head.bias', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'lm_head.weight', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268
+Error processing EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268: No face detected in the reference image.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'lm_head.bias', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'lm_head.weight']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.masked_spec_embed']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw
+Error processing D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'lm_head.weight', 'lm_head.bias']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw
+Error processing D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'lm_head.bias', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'lm_head.weight']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1', 'wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw
+Error processing D7KFYcv6YwGZSN-xaSQ9nqXaZR4YKhcp8nAdzJg3UqJS15m8V_nm64vvQ48wdlfjLD3UPkQyUr1YI9VrgoatHhVcixGRCvM9jNu7YSNoaMw: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'lm_head.weight', 'lm_head.bias']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1', 'wav2vec2.masked_spec_embed', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268
+Error processing EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'lm_head.weight', 'lm_head.bias', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1', 'wav2vec2.masked_spec_embed']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268
+Error processing EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268: No face detected in the reference image.
+Some weights of the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h were not used when initializing Wav2VecModel: ['lm_head.weight', 'wav2vec2.encoder.pos_conv_embed.conv.weight_v', 'wav2vec2.encoder.pos_conv_embed.conv.weight_g', 'lm_head.bias']
+- This IS expected if you are initializing Wav2VecModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing Wav2VecModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of Wav2VecModel were not initialized from the model checkpoint at /workspace/IMTalker/checkpoints/wav2vec2-base-960h and are newly initialized: ['wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original0', 'wav2vec2.encoder.pos_conv_embed.conv.parametrizations.weight.original1', 'wav2vec2.masked_spec_embed']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+[Model Stats] Parameters: 38,796,320 | Trainable: 38,796,320
+Processing: EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268
+Error processing EkKW0e_mIONw7p72Thj8hMxDkN7tBDB_zAztBV4rX-A8dAU8Xo-kHZMaLYTmo_ZvyrMLlZVLR3L8hyuKMEAxmQy-Ir9qrMLEehUPrkIH268: No face detected in the reference image.
