@@ -86,6 +86,35 @@ class LossPlotterCallback(pl.Callback):
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
+
+def crop_region(tensor, bbox):
+    """Crop regions from BCHW tensor per-sample using bbox [x1,y1,x2,y2] and resize to 256x256."""
+    crops = []
+    for i in range(tensor.size(0)):
+        x1, y1, x2, y2 = bbox[i].long()
+        x1, y1 = max(0, x1.item()), max(0, y1.item())
+        x2, y2 = min(tensor.size(3), x2.item()), min(tensor.size(2), y2.item())
+        if x2 <= x1 or y2 <= y1:
+            crops.append(torch.zeros(1, tensor.size(1), 256, 256, device=tensor.device))
+            continue
+        crop = tensor[i:i+1, :, y1:y2, x1:x2]
+        crops.append(F.interpolate(crop, size=(256, 256), mode='bilinear', align_corners=False))
+    return torch.cat(crops, dim=0)
+
+
+def build_face_mask(pred, face_bbox):
+    """Build per-sample face mask from bbox tensor (B, 4)."""
+    mask = torch.zeros(pred.size(0), 1, pred.size(2), pred.size(3),
+                       device=pred.device, dtype=pred.dtype)
+    for i in range(pred.size(0)):
+        x1, y1, x2, y2 = face_bbox[i].long()
+        x1, y1 = max(0, x1.item()), max(0, y1.item())
+        x2, y2 = min(pred.size(3), x2.item()), min(pred.size(2), y2.item())
+        if x2 > x1 and y2 > y1:
+            mask[i, :, y1:y2, x1:x2] = 1.0
+    return mask
+
+
 class IMFSystem(pl.LightningModule):
     def __init__(self, args):
         super().__init__()
@@ -97,22 +126,18 @@ class IMFSystem(pl.LightningModule):
 
         self.criterion_vgg = VGGLoss_mask()
         
-        # Manual optimization is required for GANs in Lightning
         self.automatic_optimization = False
-        
-        # Track actual training batches (fixes 2x global_step issue)
         self._actual_step = 0
 
     def training_step(self, batch, batch_idx):
-        # Retrieve optimizers and schedulers
         opt_g, opt_d = self.optimizers()
         sch_g, sch_d = self.lr_schedulers()
     
         real = batch["image_1"]
         ref = batch["image_0"]
         neg = batch["neg_image"]
+        halfbody = getattr(self.args, 'halfbody', False) and "face_bbox_1" in batch
         
-        # Track actual training step (1 per batch, not 2 like global_step)
         self._actual_step += 1
         
         # ===================================================================
@@ -136,9 +161,10 @@ class IMFSystem(pl.LightningModule):
         pred = self.gen.decode(ma_10, ma_00, f_0)
 
         # ===================================================================
-        #  Step 1: Train Discriminator (n_disc steps)
+        #  Step 1: Train Discriminator
         # ===================================================================
         r1_penalty_val = torch.tensor(0.0, device=real.device)
+        face_disc_loss_val = torch.tensor(0.0, device=real.device)
         for d_step in range(self.args.n_disc):
             opt_d.zero_grad()
             
@@ -148,11 +174,21 @@ class IMFSystem(pl.LightningModule):
             
             loss_d = self.calculate_gan_loss(pred_real, pred_fake, is_generator=False)
             
-            # R1 Gradient Penalty (applied every d_reg_every steps)
+            # Half-body: face-specific discriminator via disc.scale2 on cropped face
+            if halfbody:
+                face_bbox = batch["face_bbox_1"]
+                face_real = crop_region(real, face_bbox)
+                face_fake = crop_region(fake_detached, face_bbox)
+                face_d_real = self.disc.scale2(face_real)
+                face_d_fake = self.disc.scale2(face_fake)
+                face_disc_loss_val = self.calculate_gan_loss(
+                    face_d_real, face_d_fake, is_generator=False
+                )
+                loss_d = loss_d + self.args.face_disc_weight * face_disc_loss_val
+            
             if self.args.r1_weight > 0 and self._actual_step % self.args.d_reg_every == 0:
                 real_for_r1 = real.detach().requires_grad_(True)
                 pred_real_r1 = self.disc(real_for_r1)
-                # Sum outputs for multi-scale discriminator
                 if isinstance(pred_real_r1, list):
                     r1_out = sum([p.sum() for p in pred_real_r1])
                 else:
@@ -175,22 +211,43 @@ class IMFSystem(pl.LightningModule):
         # ===================================================================
         opt_g.zero_grad()
         
-        # Reconstruction Loss (L1, VGG)
-        l1_loss = F.l1_loss(pred, real)
+        # L1 loss — region-weighted in halfbody mode
+        if halfbody:
+            face_bbox = batch["face_bbox_1"]
+            face_mask = build_face_mask(pred, face_bbox)
+            body_mask = 1.0 - face_mask
+            face_l1 = F.l1_loss(pred * face_mask, real * face_mask)
+            body_l1 = F.l1_loss(pred * body_mask, real * body_mask)
+            l1_loss = self.args.face_weight * face_l1 + self.args.body_weight * body_l1
+        else:
+            l1_loss = F.l1_loss(pred, real)
+
         vgg_loss_all, vgg_loss_face = self.criterion_vgg(
             pred, real, batch["mask_eye_1"] + batch["mask_mouth_1"]
         )
 
-        # Canonical/Distance Loss
+        # Face-crop VGG in halfbody mode
+        face_crop_vgg_loss = torch.tensor(0.0, device=real.device)
+        if halfbody:
+            face_bbox = batch["face_bbox_1"]
+            face_crop_pred = crop_region(pred, face_bbox)
+            face_crop_gt = crop_region(real, face_bbox)
+            face_crop_vgg_loss, _ = self.criterion_vgg(
+                face_crop_pred, face_crop_gt,
+                torch.zeros(face_crop_pred.size(0), 1, 256, 256, device=real.device)
+            )
+
         dist1 = torch.norm(t_1 - ta_11, dim=1)
         dist2 = torch.norm(t_1 - ta_12, dim=1)
         dist_loss = torch.abs(dist1 - dist2).mean()
         
-        # Base Generator Loss
         total_g_loss = (self.args.loss_l1 * l1_loss + 
                         self.args.loss_vgg_all * vgg_loss_all + 
                         self.args.loss_vgg_face * vgg_loss_face +
                         self.args.loss_dist * dist_loss)
+
+        if halfbody:
+            total_g_loss += self.args.loss_vgg_face * face_crop_vgg_loss
         
         # GAN Loss for Generator
         for p in self.disc.parameters():
@@ -199,8 +256,16 @@ class IMFSystem(pl.LightningModule):
         pred_fake_for_g = self.disc(pred)
         loss_g_gan = self.calculate_gan_loss(None, pred_fake_for_g, is_generator=True)
         total_g_loss += self.args.gan_weight * loss_g_gan
+
+        # Half-body: face-specific G GAN loss
+        face_g_gan_loss = torch.tensor(0.0, device=real.device)
+        if halfbody:
+            face_bbox = batch["face_bbox_1"]
+            face_pred_for_g = crop_region(pred, face_bbox)
+            face_g_fake = self.disc.scale2(face_pred_for_g)
+            face_g_gan_loss = self.calculate_gan_loss(None, face_g_fake, is_generator=True)
+            total_g_loss += self.args.face_disc_weight * face_g_gan_loss
         
-        # Unfreeze D
         for p in self.disc.parameters():
             p.requires_grad = True
         
@@ -223,20 +288,38 @@ class IMFSystem(pl.LightningModule):
             'train/r1_penalty': r1_penalty_val,
             'train/actual_step': float(self._actual_step),
         }
+        if halfbody:
+            log_dict['train/face_disc_loss'] = face_disc_loss_val
+            log_dict['train/face_crop_vgg_loss'] = face_crop_vgg_loss
+            log_dict['train/face_g_gan_loss'] = face_g_gan_loss
 
         self.log_dict(log_dict, prog_bar=True)
         
         return total_g_loss
     
     def validation_step(self, batch, batch_idx):
+        halfbody = getattr(self.args, 'halfbody', False) and "face_bbox_1" in batch
+
         pred, _ = self.gen(batch["image_1"], batch["image_0"])
         recon, _ = self.gen(batch["image_0"], batch["image_0"])            
 
-        pred_l1 = F.l1_loss(pred, batch["image_1"])
+        if halfbody:
+            face_mask_1 = build_face_mask(pred, batch["face_bbox_1"])
+            body_mask_1 = 1.0 - face_mask_1
+            pred_l1 = (self.args.face_weight * F.l1_loss(pred * face_mask_1, batch["image_1"] * face_mask_1) +
+                       self.args.body_weight * F.l1_loss(pred * body_mask_1, batch["image_1"] * body_mask_1))
+
+            face_mask_0 = build_face_mask(recon, batch["face_bbox_0"])
+            body_mask_0 = 1.0 - face_mask_0
+            recon_l1 = (self.args.face_weight * F.l1_loss(recon * face_mask_0, batch["image_0"] * face_mask_0) +
+                        self.args.body_weight * F.l1_loss(recon * body_mask_0, batch["image_0"] * body_mask_0))
+        else:
+            pred_l1 = F.l1_loss(pred, batch["image_1"])
+            recon_l1 = F.l1_loss(recon, batch["image_0"])
+
         pred_vgg_all, pred_vgg_face = self.criterion_vgg(
             pred, batch["image_1"], batch["mask_eye_1"] + batch["mask_mouth_1"]
         )
-        recon_l1 = F.l1_loss(recon, batch["image_0"])
         recon_vgg_all, recon_vgg_face = self.criterion_vgg(
             recon, batch["image_0"], batch["mask_eye_0"] + batch["mask_mouth_0"]
         )
@@ -282,15 +365,32 @@ class IMFSystem(pl.LightningModule):
             return real_loss + fake_loss
             
     def configure_optimizers(self):
-        g_params = filter(lambda p: p.requires_grad, self.gen.parameters())
-        
-        # Generator Optimizer
-        opt_g = optim.Adam(g_params, lr=self.args.lr, betas=(0.5, 0.999))
+        halfbody = getattr(self.args, 'halfbody', False)
+
+        if halfbody:
+            # Per-module LR: preserve encoder knowledge, let decoders adapt
+            lr = self.args.lr
+            param_groups = [
+                {'params': list(self.gen.dense_feature_encoder.parameters()) +
+                           list(self.gen.latent_token_encoder.parameters()),
+                 'lr': lr * 0.1},
+                {'params': list(self.gen.adapt.parameters()),
+                 'lr': lr * 0.1},
+                {'params': list(self.gen.latent_token_decoder.parameters()) +
+                           list(self.gen.frame_decoder.parameters()) +
+                           list(self.gen.imt.parameters()),
+                 'lr': lr * 0.5},
+            ]
+            opt_g = optim.Adam(param_groups, lr=lr, betas=(0.5, 0.999))
+            print(f"[INFO] Half-body per-module LR: encoders={lr*0.1}, decoders={lr*0.5}")
+        else:
+            g_params = filter(lambda p: p.requires_grad, self.gen.parameters())
+            opt_g = optim.Adam(g_params, lr=self.args.lr, betas=(0.5, 0.999))
+
         scheduler_g = optim.lr_scheduler.CosineAnnealingLR(
             opt_g, T_max=self.args.iter, eta_min=self.args.lr * 0.01
         )
         
-        # Discriminator Optimizer (uses d_lr_mult for independent LR control)
         d_lr = self.args.lr * self.args.d_lr_mult
         opt_d = optim.Adam(self.disc.parameters(),
                            lr=d_lr, 
@@ -338,8 +438,9 @@ class DataModule(pl.LightningDataModule):
         self.args = args
         
     def setup(self, stage=None):
-        self.train_dataset = TFDataset(root_dir=self.args.dataset_path, split='train')
-        self.val_dataset = TFDataset(root_dir=self.args.dataset_path, split='val')
+        halfbody = getattr(self.args, 'halfbody', False)
+        self.train_dataset = TFDataset(root_dir=self.args.dataset_path, split='train', halfbody=halfbody)
+        self.val_dataset = TFDataset(root_dir=self.args.dataset_path, split='val', halfbody=halfbody)
         
     def train_dataloader(self):
         return data.DataLoader(
@@ -386,6 +487,12 @@ if __name__ == "__main__":
     parser.add_argument("--n_disc", type=int, default=1, help="Number of D update steps per G step")
     parser.add_argument("--r1_weight", type=float, default=0.0, help="R1 gradient penalty weight (0=disabled)")
     parser.add_argument("--d_reg_every", type=int, default=16, help="Apply R1 penalty every N steps")
+
+    # Half-body Params
+    parser.add_argument("--halfbody", action="store_true", help="Enable half-body training mode")
+    parser.add_argument("--face_weight", type=float, default=3.0, help="L1 face region weight (halfbody)")
+    parser.add_argument("--body_weight", type=float, default=1.0, help="L1 body region weight (halfbody)")
+    parser.add_argument("--face_disc_weight", type=float, default=2.0, help="Face discriminator loss weight (halfbody)")
 
     # Model Architecture Params
     parser.add_argument("--depth", type=int, default=2)

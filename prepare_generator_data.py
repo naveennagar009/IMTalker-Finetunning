@@ -7,15 +7,13 @@ Extracts features needed for IMTalker's generator training:
   - smirk/{video_name}.pt    -> Pose dict: pose_params (N,3), cam (N,3)
   - gaze/{video_name}.npy    -> Gaze direction (N, 2)
 
-Splits work across all available GPUs with threads for CPU/IO overlap.
-
 Usage:
     python prepare_generator_data.py \
-        --renderer_data_dir /workspace/liveavatar_data/renderer_dataset \
-        --mp4_dir /workspace/liveavatar_data/mp4 \
-        --output_dir /workspace/liveavatar_data/generator_dataset \
-        --renderer_ckpt ./checkpoints/renderer.ckpt \
-        --wav2vec_path ./checkpoints/wav2vec2-base-960h
+        --renderer_data_dir /workspace/Final_Data/renderer_dataset \
+        --mp4_dir /workspace/Final_Data/mp4 \
+        --output_dir /workspace/Final_Data/generator_dataset \
+        --renderer_ckpt ./IMTalker/checkpoints/renderer.ckpt \
+        --wav2vec_path ./IMTalker/checkpoints/wav2vec2-base-960h
 """
 
 import os
